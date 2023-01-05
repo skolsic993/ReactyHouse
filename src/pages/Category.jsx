@@ -7,7 +7,7 @@ import {
   where,
 } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ListingItem from '../components/ListingItem';
 import Navbar from '../components/Navbar';
@@ -16,7 +16,7 @@ import Header from '../components/reusable/Header';
 import Spinner from '../components/Spinner';
 import { db } from '../firebase.config';
 
-function Offers() {
+function Category() {
   const [listings, setListings] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -28,7 +28,7 @@ function Offers() {
         const listingsRef = collection(db, 'listings');
         const q = query(
           listingsRef,
-          where('offer', '==', true),
+          where('type', '==', params.categoryName),
           orderBy('timestamp', 'desc', limit(9))
         );
 
@@ -50,52 +50,37 @@ function Offers() {
     };
 
     fetchListings();
-  }, []);
+  }, [params.categoryName]);
 
   return (
     <div className="min-h-full">
       <Navbar />
-      <Header title="Offers" />
+      <Header title="Category" />
       <main>
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
             <div className="rounded-lg border-4 border-dashed border-gray-200">
               <div className="p-4">
-                <div className="">
-                  <nav aria-label="Breadcrumb">
-                    <ul className="mx-auto flex max-w-2xl items-center space-x-2 lg:max-w-7xl">
-                      <li className=" text-sm font-medium text-gray-900">
-                        <Link
-                          aria-current="page"
-                          className=" text-sm font-medium text-gray-900 cursor-pointer"
-                        >
-                          {params.categoryName}
-                        </Link>
-                      </li>
-                    </ul>
-                  </nav>
-
-                  {loading ? (
-                    <Spinner />
-                  ) : listings && listings.length > 0 ? (
-                    <>
-                      <main>
-                        <ul>
-                          {listings.map((listing) => (
-                            <ListingItem
-                              listing={listing.data}
-                              id={listing.id}
-                              key={listing.id}
-                              onDelete={true}
-                            />
-                          ))}
-                        </ul>
-                      </main>
-                    </>
-                  ) : (
-                    <Banner title="There are no current offers" />
-                  )}
-                </div>
+                {loading ? (
+                  <Spinner />
+                ) : listings && listings.length > 0 ? (
+                  <>
+                    <main>
+                      <ul>
+                        {listings.map((listing) => (
+                          <ListingItem
+                            listing={listing.data}
+                            id={listing.id}
+                            key={listing.id}
+                            onDelete={false}
+                          />
+                        ))}
+                      </ul>
+                    </main>
+                  </>
+                ) : (
+                  <Banner title="There are no items for the selected category" />
+                )}
               </div>
             </div>
           </div>
@@ -105,4 +90,4 @@ function Offers() {
   );
 }
 
-export default Offers;
+export default Category;
