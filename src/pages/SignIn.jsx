@@ -73,8 +73,11 @@ function SignIn() {
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <div className="mb-2">
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
+                <label
+                  htmlFor="email-address"
+                  className="block text-sm text-gray-500 font-medium"
+                >
+                  Email
                 </label>
                 <input
                   id="email"
@@ -89,7 +92,10 @@ function SignIn() {
                 />
               </div>
               <div>
-                <label htmlFor="password" className="sr-only">
+                <label
+                  htmlFor="password"
+                  className="block text-sm text-gray-500 font-medium"
+                >
                   Password
                 </label>
                 <div className="relative flex">
@@ -105,13 +111,13 @@ function SignIn() {
                   />
                   {showPassword ? (
                     <EyeIcon
-                      className="h-5 w-5 text-indigo-500 group-hover:text-indigo-500 cursor-pointer absolute flex align-center h-full right-3"
+                      className="w-5 text-indigo-500 group-hover:text-indigo-500 cursor-pointer absolute flex align-center h-full right-3"
                       aria-hidden="true"
                       onClick={() => setShowPassword((prevState) => !prevState)}
                     />
                   ) : (
                     <EyeSlashIcon
-                      className="h-5 w-5 text-indigo-500 group-hover:text-indigo-500 cursor-pointer absolute flex align-center h-full right-3"
+                      className="w-5 text-indigo-500 group-hover:text-indigo-500 cursor-pointer absolute flex align-center h-full right-3"
                       aria-hidden="true"
                       onClick={() => setShowPassword((prevState) => !prevState)}
                     />

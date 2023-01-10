@@ -65,8 +65,11 @@ function ForgotPassword() {
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <div className="mb-2">
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
+                <label
+                  htmlFor="email-address"
+                  className="block text-sm text-gray-500 font-medium"
+                >
+                  Email
                 </label>
                 <input
                   id="email"

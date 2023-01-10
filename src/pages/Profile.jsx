@@ -2,11 +2,12 @@ import {
   ArrowPathRoundedSquareIcon,
   ArrowRightOnRectangleIcon,
   CheckIcon,
+  PlusCircleIcon,
 } from '@heroicons/react/24/outline';
 import { getAuth, updateProfile } from 'firebase/auth';
 import { doc, updateDoc } from 'firebase/firestore';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Navbar from '../components/Navbar';
 import Header from '../components/reusable/Header';
@@ -68,8 +69,8 @@ function Profile() {
       <main>
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
-            <div className="h-96 rounded-lg border-4 border-dashed border-gray-200 flex flex-col sm:flex-col md:flex-row lg:flex-row">
-              <div className="w-full sm:w-full md:w-1/2 lg:w-1/3 p-3 sm:p-3 md:p-4 lg:p-5">
+            <div className="rounded-lg border-4 border-dashed border-gray-200 flex flex-col sm:flex-col md:flex-row lg:flex-row">
+              <div className="w-full sm:w-full md:w-1/2 lg:w-1/2 p-3 sm:p-3 md:p-4 lg:p-4">
                 <div className="flex justify-between mb-4">
                   <img
                     className="h-24 w-24 rounded-full drop-shadow-xl"
@@ -100,7 +101,7 @@ function Profile() {
                         className="h-12 w-12 mr-2 group drop-shadow-md relative flex justify-center rounded-full border border-transparent bg-blue-500 py-3 px-3 text-sm font-medium text-white hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:ring-offset-2"
                       >
                         <ArrowPathRoundedSquareIcon
-                          className="w-full text-indigo-100"
+                          className="w-full"
                           aria-hidden="true"
                         />
                       </button>
@@ -110,7 +111,7 @@ function Profile() {
                       className="h-12 w-12 group drop-shadow-md relative flex justify-center rounded-full border border-transparent bg-indigo-600 py-3 px-3 text-sm font-medium text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:ring-offset-2"
                     >
                       <ArrowRightOnRectangleIcon
-                        className="w-full text-indigo-100"
+                        className="w-full"
                         aria-hidden="true"
                       />
                     </button>
@@ -122,7 +123,7 @@ function Profile() {
                     <div className="mb-2">
                       <label
                         htmlFor="name"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm text-gray-500 font-medium"
                       >
                         Name
                       </label>
@@ -145,7 +146,7 @@ function Profile() {
                       <div className="mt-2">
                         <label
                           htmlFor="email"
-                          className="block text-sm font-medium text-gray-700"
+                          className="block text-sm text-gray-500 font-medium"
                         >
                           Email
                         </label>
@@ -166,7 +167,16 @@ function Profile() {
                   </form>
                 </div>
               </div>
-              <div className="w-full sm:w-full md:w-1/2 lg:w-1/2 p-4">RRR</div>
+              <div className="w-full relative p-3 sm:p-3 md:p-4 lg:p-4">
+                <div className="absolute top-0 right-1 p-3 sm:p-3 md:p-4 lg:p-4">
+                  <Link
+                    to={'/create-listing'}
+                    className="h-12 w-12 group drop-shadow-md relative flex justify-center rounded-full border border-transparent bg-green-500 py-3 px-3 text-sm font-medium text-white hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:ring-offset-2"
+                  >
+                    <PlusCircleIcon className="w-full" aria-hidden="true" />
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PrivateRoute from './components/PrivateRoute';
 import Category from './pages/Category';
+import CreateListing from './pages/CreateListing';
 import Explore from './pages/Explore';
 import ForgotPassword from './pages/ForgotPassword';
 import Offers from './pages/Offers';
@@ -24,6 +25,7 @@ export default function Example() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/create-listing" element={<CreateListing />} />
         </Routes>
       </Router>
 
