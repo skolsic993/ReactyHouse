@@ -18,7 +18,6 @@ import { db, firebaseApp } from '../firebase.config';
 function Listing() {
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const navigate = useNavigate();
   const params = useParams();
@@ -43,22 +42,6 @@ function Listing() {
     toast.success('Link copied');
   };
 
-  const prevSlide = () => {
-    const isFirstSlide = currentIndex === 0;
-    const newIndex = isFirstSlide
-      ? listing.imageUrls.length - 1
-      : currentIndex - 1;
-
-    setCurrentIndex(newIndex);
-  };
-
-  const nextSlide = () => {
-    const isLastSlide = currentIndex === listing.imageUrls.length - 1;
-    const newIndex = isLastSlide ? 0 : currentIndex + 1;
-
-    setCurrentIndex(newIndex);
-  };
-
   if (loading) {
     return <Spinner />;
   }
@@ -71,7 +54,7 @@ function Listing() {
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
             <div className="rounded-lg border-4 border-dashed border-gray-200 flex flex-col sm:flex-col md:flex-row lg:flex-row relative">
-              <div className="absolute top-0 right-1 p-3 sm:p-3 md:p-4 lg:p-4">
+              <div className="absolute top-0 right-1 p-3 sm:p-3 md:p-4 lg:p-4 z-50">
                 <button
                   onClick={onClick}
                   className="h-12 w-12 group drop-shadow-md relative flex justify-center rounded-full border border-transparent bg-blue-500 py-3 px-3 text-sm font-medium text-white hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:ring-offset-2"
@@ -92,7 +75,7 @@ function Listing() {
                   </Link>
                 </div>
               )}
-              <div className="w-full sm:w-full md:w-1/2 lg:w-1/2 p-3 sm:p-4 relative">
+              <div className="w-full sm:w-full h-[320px] sm:h-[425px] md:w-1/2 lg:w-1/2 p-3 sm:p-4 relative">
                 <Slider
                   mobileSize={'320px'}
                   desktopSize={'425px'}

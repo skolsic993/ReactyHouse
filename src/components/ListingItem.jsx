@@ -1,21 +1,17 @@
-import { TrashIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import BathIcon from '../assets/images/bathtub.png';
 import BedIcon from '../assets/images/bed.png';
 
-function ListingItem({ listing, id, onDelete }) {
-  const removeItem = (id, name) => {
-    console.log(`Remove item ${id}: ${name}`);
-  };
-
+function ListingItem({ listing, id, onDelete, editItem }) {
   return (
     <div className="gap-y-4 lg:grid lg:grid-cols-1 lg:gap-y-8">
       <div className="aspect-w-3 aspect-h-2 overflow-hidden rounded-lg mb-2">
         <Link to={`/category/${listing.type}/${id}`}>
           <div className="h-64 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
             <img
-              className="h-full w-full"
+              className="h-full w-full object-cover"
               src={listing.imageUrls[0]}
               alt={listing.name}
             />
@@ -25,7 +21,9 @@ function ListingItem({ listing, id, onDelete }) {
           <h3 className="mt-4 text-medium text-gray-700 font-medium">
             {listing.name}
           </h3>
-          <h3 className="text-sm text-gray-500">{listing.location}</h3>
+          <h3 className="w-60 text-sm text-gray-500 truncate">
+            {listing.location}
+          </h3>
           <p className="flex items-start flex-col sm:flex-row sm:items-row">
             <img src={BedIcon} alt="Bed " className="w-4 h-4 ml-1 mr-3 " />
             <span className="text-sm text-gray-500 font-medium flex">
@@ -52,12 +50,22 @@ function ListingItem({ listing, id, onDelete }) {
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             {listing.type === 'rent' && '/ Month'}
           </p>
+          {editItem && (
+            <button
+              onClick={() => {
+                editItem(id);
+              }}
+              className="w-10 h-10 mr-2 group drop-shadow-md absolute top-0 right-10 flex justify-center items-center rounded-full border border-transparent bg-blue-600 py-2 px-2 text-sm font-medium text-white hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:ring-offset-2"
+            >
+              <PencilIcon className="w-full" aria-hidden="true" />
+            </button>
+          )}
           {onDelete && (
             <button
               onClick={() => {
-                removeItem(listing.id, listing.name);
+                onDelete(id);
               }}
-              className="w-10 h-10 mr-2 group drop-shadow-md absolute top-0 right-1 flex justify-center items-center rounded-full border border-transparent bg-red-600 py-2 px-2 text-sm font-medium text-white hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:ring-offset-2"
+              className="w-10 h-10 group drop-shadow-md absolute top-0 right-1 flex justify-center items-center rounded-full border border-transparent bg-red-600 py-2 px-2 text-sm font-medium text-white hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:ring-offset-2"
             >
               <TrashIcon className="w-full" aria-hidden="true" />
             </button>

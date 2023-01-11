@@ -1,6 +1,6 @@
 import { CheckIcon, LockClosedIcon } from '@heroicons/react/20/solid';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import {
   getDownloadURL,
   getStorage,
@@ -8,16 +8,17 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import Navbar from '../components/Navbar';
 import Spinner from '../components/Spinner';
 import { db, firebaseApp } from '../firebase.config';
 
-function CreateListing() {
+function EditListing() {
   const [geoLocationEnabled, setGeoLocationEnabled] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [listing, setListing] = useState(false);
   const [formData, setFormData] = useState({
     type: 'rent',
     name: '',
@@ -53,6 +54,33 @@ function CreateListing() {
   const auth = getAuth(firebaseApp);
   const navigate = useNavigate();
   const isMounted = useRef(true);
+  const params = useParams();
+
+  useEffect(() => {
+    if (listing && listing.userRef !== auth.currentUser.uid) {
+      toast.error('Not allowed');
+      navigate('/');
+    }
+  });
+
+  useEffect(() => {
+    setLoading(true);
+    const fetchListing = async () => {
+      const docRef = doc(db, 'listings', params.listingId);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        setListing(docSnap.data());
+        setFormData({ ...docSnap.data(), address: docSnap.data().location });
+        setLoading(false);
+      } else {
+        navigate('/');
+        toast.error('Listing does not exist');
+      }
+    };
+
+    fetchListing();
+  }, [params.listingId, navigate]);
 
   useEffect(() => {
     if (isMounted) {
@@ -183,7 +211,8 @@ function CreateListing() {
     location && (formDataCopy.location = location);
     !formDataCopy.offer && delete formDataCopy.discountedPrice;
 
-    const docRef = await addDoc(collection(db, 'listings'), formDataCopy);
+    const docRef = doc(db, 'listings', params.listingId);
+    await updateDoc(docRef, formDataCopy);
     setLoading(false);
     toast.success('Listing saved');
     navigate(`/category/${formDataCopy.type}/${docRef.id}`);
@@ -205,7 +234,7 @@ function CreateListing() {
               alt="Your Company"
             />
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-              Create Listing
+              Edit Listing
             </h2>
           </div>
           <form className="mt-8 space-y-6" onSubmit={onSubmit}>
@@ -642,7 +671,7 @@ function CreateListing() {
                     aria-hidden="true"
                   />
                 </span>
-                Create
+                Change
               </button>
             </div>
           </form>
@@ -652,4 +681,4 @@ function CreateListing() {
   );
 }
 
-export default CreateListing;
+export default EditListing;
