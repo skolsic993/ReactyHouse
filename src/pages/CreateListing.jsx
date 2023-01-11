@@ -1,11 +1,19 @@
 import { CheckIcon, LockClosedIcon } from '@heroicons/react/20/solid';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from 'firebase/storage';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { v4 as uuidv4 } from 'uuid';
 import Navbar from '../components/Navbar';
 import Spinner from '../components/Spinner';
-import { firebaseApp } from '../firebase.config';
+import { db, firebaseApp } from '../firebase.config';
 
 function CreateListing() {
   const [geoLocationEnabled, setGeoLocationEnabled] = useState(true);
@@ -97,9 +105,10 @@ function CreateListing() {
 
     setLoading(true);
 
-    if (discountedPrice <= regularPrice) {
+    if (discountedPrice >= +regularPrice) {
       setLoading(false);
-      toast.error('Discounted price needs to be less than regular price!');
+      toast.error('Discounted price needs to be less than regular price');
+      return;
     }
 
     if (images.length > 6) {
@@ -112,16 +121,72 @@ function CreateListing() {
     let location;
 
     if (!geoLocationEnabled) {
-      toast.info('Make sure GeoLocation from Google is enabled!');
+      toast.info('Make sure GeoLocation from Google is enabled');
     } else {
       geoLocation.lat = latitude;
       geoLocation.long = longitude;
       location = address;
-
-      console.log(geoLocation, location);
     }
 
+    const storeImage = async (image) => {
+      return new Promise((resolve, reject) => {
+        const storage = getStorage();
+        const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
+
+        const storageRef = ref(storage, 'images/' + fileName);
+        const uploadTask = uploadBytesResumable(storageRef, image);
+
+        uploadTask.on(
+          'state_changed',
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+              case 'paused':
+                console.log('Upload is paused');
+                break;
+              case 'running':
+                console.log('Upload is running');
+                break;
+            }
+          },
+          (error) => {
+            reject(error);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              resolve(downloadURL);
+            });
+          }
+        );
+      });
+    };
+
+    const imageUrls = await Promise.all(
+      [...images].map((image) => storeImage(image))
+    ).catch(() => {
+      setLoading(false);
+      toast.error('Images not uploaded');
+      return;
+    });
+
+    const formDataCopy = {
+      ...formData,
+      imageUrls,
+      geoLocation,
+      timestamp: serverTimestamp(),
+    };
+
+    delete formDataCopy.images;
+    delete formDataCopy.address;
+    location && (formDataCopy.location = location);
+    !formDataCopy.offer && delete formDataCopy.discountedPrice;
+
+    const docRef = await addDoc(collection(db, 'listings'), formDataCopy);
     setLoading(false);
+    toast.success('Listing saved');
+    navigate(`/category/${formDataCopy.type}/${docRef.id}`);
   };
 
   if (loading) {
@@ -180,7 +245,7 @@ function CreateListing() {
                   required
                   className="relative block w-full appearance-none rounded-none rounded-t-md rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   placeholder="Address"
-                  maxLength="32"
+                  maxLength="50"
                   minLength="10"
                   value={address}
                   onChange={onMutate}

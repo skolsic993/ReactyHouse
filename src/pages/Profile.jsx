@@ -51,7 +51,7 @@ function Profile() {
         });
       }
     } catch (error) {
-      toast.error('Update profile failed!');
+      toast.error('Update profile failed');
     }
   };
 

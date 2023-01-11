@@ -38,10 +38,10 @@ function SignIn() {
 
       if (userCredential.user) {
         navigate('/');
-        toast.success('Welcome back!');
+        toast.success('Welcome back');
       }
     } catch (error) {
-      toast.error('Invalid credentials!');
+      toast.error('Invalid credentials');
     }
   };
 

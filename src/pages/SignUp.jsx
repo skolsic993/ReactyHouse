@@ -55,9 +55,9 @@ function SignUp() {
       await setDoc(doc(db, 'users', user.uid), formDataCopy);
 
       navigate('/');
-      toast.success('Successfully registered!');
+      toast.success('Successfully registered');
     } catch (error) {
-      toast.error('Invalid credentials!');
+      toast.error('Invalid credentials');
     }
   };
 

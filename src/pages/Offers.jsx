@@ -45,7 +45,7 @@ function Offers() {
         setListings(listings);
         setLoading(false);
       } catch (error) {
-        toast.error('Could not fetch data!');
+        toast.error('Could not fetch data');
       }
     };
 
@@ -81,14 +81,18 @@ function Offers() {
                     <>
                       <main>
                         <ul>
-                          {listings.map((listing) => (
-                            <ListingItem
-                              listing={listing.data}
-                              id={listing.id}
-                              key={listing.id}
-                              onDelete={true}
-                            />
-                          ))}
+                          <li>
+                            <div className="mx-auto max-w-2xl lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8">
+                              {listings.map((listing) => (
+                                <ListingItem
+                                  listing={listing.data}
+                                  id={listing.id}
+                                  key={listing.id}
+                                  onDelete={true}
+                                />
+                              ))}
+                            </div>
+                          </li>
                         </ul>
                       </main>
                     </>

@@ -13,11 +13,11 @@ function Explore() {
       <main>
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
-            <div className="h-96 rounded-lg border-4 border-dashed border-gray-200 flex flex-col sm:flex-col md:flex-row lg:flex-row">
-              <div className=" w-full sm:w-full md:w-1/2 lg:w-1/2 p-4">
-                AAAAAAAAAA
+            <div className="rounded-lg border-4 border-dashed border-gray-200 flex flex-col sm:flex-col md:flex-row lg:flex-row">
+              <div className="w-full sm:w-full md:w-1/2 lg:w-1/2 p-3 sm:p-4">
+                AAA
               </div>
-              <div className="w-full sm:w-full md:w-1/2 lg:w-1/2 p-3 sm:p-3 md:p-4 lg:p-5">
+              <div className="w-full sm:w-full md:w-1/2 lg:w-1/2 p-3 sm:p-4">
                 <h2 className="mb-4 text-medium font-medium text-gray-900">
                   Categories
                 </h2>
