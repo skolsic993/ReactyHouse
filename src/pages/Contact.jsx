@@ -62,6 +62,8 @@ function Contact() {
                 </div>
                 <textarea
                   name="message"
+                  rows="5"
+                  cols="60"
                   id="message"
                   className="block p-2.5 w-full text-sm bg-blue-50 rounded-lg border focus:ring-blue-100 focus:border-blue-500 focus:outline-none focus-visible:border-gray-100 dark:placeholder-gray-100 dark:text-gray-700"
                   value={message}

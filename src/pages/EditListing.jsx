@@ -593,8 +593,8 @@ function EditListing() {
               )}
 
               {geoLocationEnabled && (
-                <div className="mb-2 flex">
-                  <div className="flex flex-col mr-2">
+                <div className="mb-2 flex flex-col sm:flex-row">
+                  <div className="flex flex-col sm:mr-2">
                     <label
                       htmlFor="Latitude"
                       className="block text-sm text-gray-500 font-medium"
@@ -635,7 +635,7 @@ function EditListing() {
               )}
 
               <div className="mb-2 flex">
-                <div className="flex flex-col">
+                <div className="flex flex-col w-full sm:w-64">
                   <label
                     htmlFor="images"
                     className="block text-sm text-gray-500 font-medium"

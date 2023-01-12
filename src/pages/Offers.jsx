@@ -59,8 +59,8 @@ function Offers() {
       <main>
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
-            <div className="rounded-lg border-4 border-dashed border-gray-200">
-              <div className="p-4">
+            <div className="rounded-lg">
+              <div className="py-4 sm:py-6">
                 <div className="">
                   <nav aria-label="Breadcrumb">
                     <ul className="mx-auto flex max-w-2xl items-center space-x-2 lg:max-w-7xl">
@@ -88,7 +88,7 @@ function Offers() {
                                   listing={listing.data}
                                   id={listing.id}
                                   key={listing.id}
-                                  onDelete={true}
+                                  onDelete={false}
                                 />
                               ))}
                             </div>

@@ -126,8 +126,8 @@ function Profile() {
       <main>
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
-            <div className="rounded-lg border-4 border-dashed border-gray-200 flex flex-col sm:flex-col md:flex-row lg:flex-row">
-              <div className="w-full sm:w-full md:w-1/2 lg:w-1/2 p-3 sm:p-3 md:p-4 lg:p-4">
+            <div className="rounded-lg flex flex-col sm:flex-col md:flex-row lg:flex-row">
+              <div className="w-full sm:w-full md:w-1/2 lg:w-1/2 p-3 sm:p-4 sm:pl-0">
                 <div className="flex justify-between mb-4">
                   <img
                     className="h-24 w-24 rounded-full drop-shadow-xl"
@@ -142,12 +142,9 @@ function Profile() {
                           onSubmit();
                           setChangeDetails((prevState) => !prevState);
                         }}
-                        className="h-12 w-12 mr-2 group drop-shadow-md relative flex justify-center rounded-full border border-transparent bg-green-500 py-3 px-3 text-sm font-medium text-white hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:ring-offset-2"
+                        className="h-10 w-10 sm:h-12 sm:w-12 mr-2 group drop-shadow-md relative flex justify-center rounded-full border border-transparent bg-green-500 py-2 px-2 sm:py-3 sm:px-3 text-sm font-medium text-white hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:ring-offset-2"
                       >
-                        <CheckIcon
-                          className="w-full text-indigo-100"
-                          aria-hidden="true"
-                        />
+                        <CheckIcon className="w-full" aria-hidden="true" />
                       </button>
                     ) : (
                       <button

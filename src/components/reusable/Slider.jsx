@@ -45,7 +45,7 @@ function Slider({ mobileSize, desktopSize, id }) {
     };
 
     fetchListings();
-  }, []);
+  }, [id]);
 
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;
@@ -76,18 +76,22 @@ function Slider({ mobileSize, desktopSize, id }) {
             : listings[currentIndex].data.imageUrls[0]
         })`,
       }}
-      className={`w-full h-full h-[${mobileSize}] sm:h-[${desktopSize}] rounded-2xl bg-center bg-cover duration-700 ease-in-out relative cursor-pointer`}
+      className={`w-full h-full h-[${mobileSize}] sm:h-[${desktopSize}] rounded-xl bg-center bg-cover duration-700 ease-in-out relative`}
     >
       {' '}
       {!element && (
         <div className="absolute bottom-2 left-2 p-4 bg-white rounded-2xl">
-          <p className="text-medium font-medium text-gray-900">
+          <p className="text-medium w-40 sm:w-full font-medium text-gray-900 truncate">
             {listings[currentIndex].data.name}
           </p>
           <p className="text-sm font-medium text-green-500">
             $
-            {listings[currentIndex].data.discountedPrice ??
-              listings[currentIndex].data.regularPrice}{' '}
+            {listings[currentIndex].data.discountedPrice
+              ?.toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ',') ??
+              listings[currentIndex].data.regularPrice
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
             {listings[currentIndex].data.type === 'rent' && '/ month'}
           </p>
         </div>

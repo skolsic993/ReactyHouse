@@ -52,9 +52,9 @@ function Listing() {
       <Header title={listing.name} />
       <main>
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <div className="rounded-lg border-4 border-dashed border-gray-200 flex flex-col sm:flex-col md:flex-row lg:flex-row relative">
-              <div className="absolute top-0 right-1 p-3 sm:p-3 md:p-4 lg:p-4 z-50">
+          <div className="px-2 py-6 sm:px-0">
+            <div className="rounded-lg flex flex-col sm:flex-col md:flex-row lg:flex-row relative">
+              <div className="absolute top-2 right-2 sm:top-0 sm:right-1 sm:pt-4 z-50">
                 <button
                   onClick={onClick}
                   className="h-12 w-12 group drop-shadow-md relative flex justify-center rounded-full border border-transparent bg-blue-500 py-3 px-3 text-sm font-medium text-white hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:ring-offset-2"
@@ -63,7 +63,7 @@ function Listing() {
                 </button>
               </div>
               {auth.currentUser?.uid !== listing.userRef && (
-                <div className="absolute top-0 right-14 p-3 sm:p-3 md:p-4 lg:p-4">
+                <div className="absolute top-2 right-14 sm:top-0 sm:right-14 mr-1 sm:pt-4 z-50">
                   <Link
                     to={`/contact/${listing.userRef}?listingName=${listing.name}`}
                     className="h-12 w-12 group drop-shadow-md relative flex justify-center rounded-full border border-transparent bg-blue-500 py-3 px-3 text-sm font-medium text-white hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:ring-offset-2"
@@ -75,7 +75,7 @@ function Listing() {
                   </Link>
                 </div>
               )}
-              <div className="w-full sm:w-full h-[320px] sm:h-[425px] md:w-1/2 lg:w-1/2 p-3 sm:p-4 relative">
+              <div className="w-full sm:w-full h-[320px] sm:h-[425px] md:w-1/2 lg:w-1/2 sm:p-4 sm:pl-0 relative">
                 <Slider
                   mobileSize={'320px'}
                   desktopSize={'425px'}
@@ -83,9 +83,9 @@ function Listing() {
                 />
               </div>
 
-              <div className="w-full sm:w-full md:w-1/2 lg:w-1/2 p-3 sm:p-4">
+              <div className="w-full sm:w-full md:w-1/2 lg:w-1/2 sm:p-4 sm:pr-0">
                 <div>
-                  <h2 className="text-medium font-medium text-gray-700">
+                  <h2 className="text-medium font-medium text-gray-700 mt-3 sm:mt-0">
                     Address
                   </h2>
 

@@ -16,6 +16,7 @@ import Spinner from '../components/Spinner';
 import { db, firebaseApp } from '../firebase.config';
 
 function CreateListing() {
+  //eslint-disable-next-line
   const [geoLocationEnabled, setGeoLocationEnabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -564,8 +565,8 @@ function CreateListing() {
               )}
 
               {geoLocationEnabled && (
-                <div className="mb-2 flex">
-                  <div className="flex flex-col mr-2">
+                <div className="mb-2 flex flex-col sm:flex-row">
+                  <div className="flex flex-col sm:mr-2">
                     <label
                       htmlFor="Latitude"
                       className="block text-sm text-gray-500 font-medium"
@@ -584,7 +585,7 @@ function CreateListing() {
                     />
                   </div>
 
-                  <div className="flex flex-col">
+                  <div className="flex flex-col mt-1 sm:mt-0">
                     <label
                       htmlFor="Longitude"
                       className="block text-sm text-gray-500 font-medium"
@@ -606,7 +607,7 @@ function CreateListing() {
               )}
 
               <div className="mb-2 flex">
-                <div className="flex flex-col">
+                <div className="flex flex-col w-full sm:w-64">
                   <label
                     htmlFor="images"
                     className="block text-sm text-gray-500 font-medium"
